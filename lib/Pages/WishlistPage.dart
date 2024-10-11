@@ -7,7 +7,7 @@ class WishlistPage extends StatelessWidget {
   final List<double> feelsLikeTemps;
   final List<double> humidities;
   final List<int> days, months, years, hours, minutes; // Time-related data
-  final List<int>
+  final List<String>
       icons; // List of weather codes (e.g., 1 for rain, 2 for cloud)
 
   WishlistPage({

@@ -1,3 +1,4 @@
+import 'package:provider/provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_5/Widgets/Vaigiotoi.dart';
@@ -5,6 +6,7 @@ import 'package:flutter_application_5/Widgets/Vaingaytoi.dart';
 import '../Widgets/AppBarWidget.dart';
 import '../Widgets/DrawerWidget.dart';
 import '../Widgets/Nhietdochung.dart';
+import '../Widgets/WishlistProvider.dart';
 import '../Widgets/callapi.dart';
 
 class HomePage extends StatefulWidget {
@@ -13,6 +15,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  late WishlistProvider wishlistProvider;
   TextEditingController _textEditingController = TextEditingController();
   String diachi = 'Hà Nội';
   double vi_do = 21.0245;
@@ -144,26 +147,32 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
+    super.initState();
+    wishlistProvider = Provider.of<WishlistProvider>(context, listen: false);
     // Trigger the API request immediately when the app starts
     solieu();
   }
 
   // Function to add or remove from wishlist
-  void _toggleWishlist(String diachi) {
+  void _toggleWishlist(String location) {
+    if (wishlistProvider.wishlist.contains(location)) {
+      wishlistProvider.removeFromWishlist(location);
+    } else {
+      wishlistProvider.addToWishlist(
+        location,
+        nhiet_do_hien_tai,
+        nhiet_do_cam_nhan,
+        do_am,
+        day_now,
+        month_now,
+        year_now,
+        hour_now,
+        minute_now,
+        kieu_icon,
+      );
+    }
     setState(() {
-      if (!wishlist.contains(diachi)) {
-        wishlist.add(diachi); // Add the location to wishlist
-        isInWishlist = true; // Mark as added
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text('$diachi added to wishlist'),
-        ));
-      } else {
-        wishlist.remove(diachi); // Remove the location
-        isInWishlist = false; // Mark as removed
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text('$diachi removed from wishlist'),
-        ));
-      }
+      isInWishlist = wishlistProvider.wishlist.contains(location);
     });
   }
 
@@ -626,6 +635,8 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final wishlistProvider = Provider.of<WishlistProvider>(context);
+    bool isInWishlist = wishlistProvider.wishlist.contains(diachi);
     return Scaffold(
       body: ListView(
         controller: _scrollController, // Thêm controller vào ListView
@@ -824,15 +835,16 @@ class _HomePageState extends State<HomePage> {
       ),
       //Gaveta
       drawer: DrawerWidget(
-        wishlist: [],
-        temperatures: [],
-        feelsLikeTemps: [],
-        humidities: [],
-        days: [],
-        months: [],
-        years: [],
-        hours: [],
-        minutes: [],
+        wishlist: wishlistProvider.wishlist,
+        temperatures: wishlistProvider.temperatures,
+        feelsLikeTemps: wishlistProvider.feelsLikeTemps,
+        humidities: wishlistProvider.humidities,
+        days: wishlistProvider.days,
+        months: wishlistProvider.months,
+        years: wishlistProvider.years,
+        hours: wishlistProvider.hours,
+        minutes: wishlistProvider.minutes,
+        icons: wishlistProvider.icons,
       ),
 
       floatingActionButton: FloatingActionButton(
