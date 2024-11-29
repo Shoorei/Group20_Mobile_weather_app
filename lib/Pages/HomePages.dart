@@ -844,7 +844,7 @@ class _HomePageState extends State<HomePage> {
         years: wishlistProvider.years,
         hours: wishlistProvider.hours,
         minutes: wishlistProvider.minutes,
-        icons: wishlistProvider.icons,
+        // icons: wishlistProvider.icons,
       ),
 
       floatingActionButton: FloatingActionButton(

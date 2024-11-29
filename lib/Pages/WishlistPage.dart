@@ -52,17 +52,17 @@ class WishlistPage extends StatelessWidget {
                 final int year = years[index];
                 final int hour = hours[index];
                 final int minute = minutes[index];
-                final int iconCode = icons[index];
+                // final int iconCode = icons[index];
 
                 // Determine the icon based on the weather code
                 String weatherIcon;
-                if (iconCode == 1) {
-                  weatherIcon = 'assets/images/rain.png';
-                } else if (iconCode == 2) {
-                  weatherIcon = 'assets/images/cloud.png';
-                } else {
-                  weatherIcon = 'assets/images/clearsky.png';
-                }
+                // if (iconCode == 1) {
+                //   weatherIcon = 'assets/images/rain.png';
+                // } else if (iconCode == 2) {
+                //   weatherIcon = 'assets/images/cloud.png';
+                // } else {
+                //   weatherIcon = 'assets/images/clearsky.png';
+                // }
 
                 return Padding(
                   padding: const EdgeInsets.symmetric(
@@ -127,11 +127,11 @@ class WishlistPage extends StatelessWidget {
                             ),
                           ],
                         ),
-                        leading: Image.asset(
-                          weatherIcon, // Display the appropriate weather icon
-                          width: 40,
-                          height: 40,
-                        ),
+                        // leading: Image.asset(
+                        //   weatherIcon,
+                        //   width: 40,
+                        //   height: 40,
+                        // ),
                         trailing: IconButton(
                           icon: Icon(Icons.delete, color: Colors.red),
                           onPressed: () {
